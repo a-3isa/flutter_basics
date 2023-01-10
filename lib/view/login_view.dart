@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,9 +66,10 @@ class _LoginViewState extends State<LoginView> {
                   final user = FirebaseAuth.instance.currentUser;
                   final emailVerified = user?.emailVerified ?? false;
                   if (emailVerified) {
-                    print("Verified");
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/logout/', (route) => false);
                   } else {
-                    print(user?.email);
+                    log(user?.email as String);
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         '/verfication/', (route) => false);
                   }
@@ -75,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         '/register/', (route) => false);
                   } else if (e.code == 'wrong-password') {
-                    print('Wrong password');
+                    log('Wrong password');
                   }
                 }
               },

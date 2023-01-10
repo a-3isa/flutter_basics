@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:new_basics/view/logout_view.dart';
 import 'firebase_options.dart';
 import 'view/login_view.dart';
 import 'view/register_view.dart';
@@ -17,7 +18,8 @@ void main() {
     routes: {
       '/login/': (context) => LoginView(),
       '/register/': (context) => RegisterView(),
-      '/verfication/': (context) => VerficationView()
+      '/verfication/': (context) => VerficationView(),
+      '/logout/': (context) => LogoutView(),
     },
   ));
 }
@@ -35,16 +37,16 @@ class HomePage extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
+              print(user?.email);
               if (user != null) {
                 if (user.emailVerified) {
-                  print("Verified");
+                  return LogoutView();
                 } else {
                   return VerficationView();
                 }
               } else {
                 return LoginView();
               }
-              return Text('done');
 
             default:
               return Center(child: CircularProgressIndicator());
