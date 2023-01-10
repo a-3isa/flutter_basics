@@ -35,56 +35,60 @@ class _LoginViewState extends State<LoginView> {
         centerTitle: true,
         title: Text("Login"),
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              controller: _email,
+              decoration: InputDecoration(hintText: "Email"),
+              enableSuggestions: true,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _password,
+              decoration: InputDecoration(hintText: "Password"),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                try {
+                  final userCredential = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: email, password: password);
+                  print(userCredential);
+                  final user = FirebaseAuth.instance.currentUser;
+                  final emailVerified = user?.emailVerified ?? false;
+                  if (emailVerified) {
+                    print("Verified");
+                  } else {
+                    print(user?.email);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/verfication/', (route) => false);
+                  }
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/register/', (route) => false);
+                  } else if (e.code == 'wrong-password') {
+                    print('Wrong password');
+                  }
+                }
+              },
+              child: Text("Login"),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/register/', (route) => false);
+                },
+                child: Text('Not register yet? Register here!'))
+          ],
         ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Center(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      decoration: InputDecoration(hintText: "Email"),
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    TextField(
-                      controller: _password,
-                      decoration: InputDecoration(hintText: "Password"),
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-                        try {
-                          final userCredential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-                          print(userCredential);
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            print('User not found');
-                          } else if (e.code == 'wrong-password') {
-                            print('Wrong password');
-                          }
-                        }
-                      },
-                      child: Text("Login"),
-                    ),
-                  ],
-                ),
-              );
-            default:
-              return Text("Loading");
-          }
-        },
       ),
     );
   }

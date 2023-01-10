@@ -35,59 +35,53 @@ class _RegisterViewState extends State<RegisterView> {
         title: Text("Register"),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Center(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _email,
-                      decoration: InputDecoration(hintText: "Email"),
-                      enableSuggestions: true,
-                      autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    TextField(
-                      controller: _password,
-                      decoration: InputDecoration(hintText: "Password"),
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              controller: _email,
+              decoration: InputDecoration(hintText: "Email"),
+              enableSuggestions: true,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _password,
+              decoration: InputDecoration(hintText: "Password"),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
 
-                        try {
-                          final userCredential = await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: email, password: password);
-                          print(userCredential);
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            print('Weak password');
-                          } else if (e.code == 'email-is-already-in-use') {
-                            print('Email is already in use');
-                          } else if (e.code == 'invalid-email') {
-                            print('Invalid email');
-                          }
-                        }
-                      },
-                      child: Text("Register"),
-                    ),
-                  ],
-                ),
-              );
-            default:
-              return Text("Loading");
-          }
-        },
+                try {
+                  final userCredential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: email, password: password);
+                  print(userCredential);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    print('Weak password');
+                  } else if (e.code == 'email-is-already-in-use') {
+                    print('Email is already in use');
+                  } else if (e.code == 'invalid-email') {
+                    print('Invalid email');
+                  }
+                }
+              },
+              child: Text("Register"),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("/login/", (route) => false);
+                },
+                child: Text("Already registerd? Login here!"))
+          ],
+        ),
       ),
     );
   }
