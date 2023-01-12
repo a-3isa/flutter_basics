@@ -97,3 +97,13 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
+
+
+Future<void> showErrorDialog(BuildContext context,String text,){
+  return showDialog(context:context , builder :(context){
+    return AlertDialog(
+      title : Text('An Error occurred')
+    )
+  } )
+
+}
