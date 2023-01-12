@@ -27,7 +27,7 @@ class _LogoutViewState extends State<LogoutView> {
                   if (shouldLogout) {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil("/login/", (route) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   }
                   break;
               }

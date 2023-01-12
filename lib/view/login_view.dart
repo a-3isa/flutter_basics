@@ -68,16 +68,16 @@ class _LoginViewState extends State<LoginView> {
                   if (emailVerified) {
                     log(user?.email as String);
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/logout/', (route) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   } else {
                     log(user?.email as String);
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/verfication/', (route) => false);
+                        verficationRoute, (route) => false);
                   }
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/register/', (route) => false);
+                        registerRoute, (route) => false);
                   } else if (e.code == 'wrong-password') {
                     log('Wrong password');
                   }
@@ -88,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
             TextButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/register/', (route) => false);
+                      .pushNamedAndRemoveUntil(registerRoute, (route) => false);
                 },
                 child: Text('Not register yet? Register here!'))
           ],
