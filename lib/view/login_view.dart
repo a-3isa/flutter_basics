@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../firebase_options.dart';
+import 'package:new_basics/constants/routes.dart';
+import 'package:new_basics/utilities/show_error.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -59,9 +59,8 @@ class _LoginViewState extends State<LoginView> {
                 final email = _email.text;
                 final password = _password.text;
                 try {
-                  final userCredential = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: email, password: password);
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email, password: password);
                   // print(userCredential);
                   final user = FirebaseAuth.instance.currentUser;
                   final emailVerified = user?.emailVerified ?? false;
@@ -76,11 +75,26 @@ class _LoginViewState extends State<LoginView> {
                   }
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        registerRoute, (route) => false);
+                    await showErrorDialog(
+                      context,
+                      'User not found',
+                    );
                   } else if (e.code == 'wrong-password') {
-                    log('Wrong password');
+                    await showErrorDialog(
+                      context,
+                      'Wrong Password',
+                    );
+                  } else {
+                    await showErrorDialog(
+                      context,
+                      'Error ${e.code}',
+                    );
                   }
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: Text("Login"),
@@ -96,14 +110,4 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-}
-
-
-Future<void> showErrorDialog(BuildContext context,String text,){
-  return showDialog(context:context , builder :(context){
-    return AlertDialog(
-      title : Text('An Error occurred')
-    )
-  } )
-
 }

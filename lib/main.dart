@@ -1,9 +1,7 @@
-import 'dart:developer';
-import 'package:contents/routes.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:new_basics/constants/routes.dart';
 import 'package:new_basics/view/logout_view.dart';
 import 'firebase_options.dart';
 import 'view/login_view.dart';
