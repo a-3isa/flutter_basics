@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'package:contents/routes.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +19,10 @@ void main() {
     ),
     home: const HomePage(),
     routes: {
-      '/login/': (context) => LoginView(),
-      '/register/': (context) => RegisterView(),
-      '/verfication/': (context) => VerficationView(),
-      '/logout/': (context) => LogoutView(),
+      loginRoute: (context) => LoginView(),
+      registerRoute: (context) => RegisterView(),
+      verficationRoute: (context) => VerficationView(),
+      logoutRoute: (context) => LogoutView(),
     },
   ));
 }
@@ -37,7 +40,7 @@ class HomePage extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
-              print(user?.email);
+              // log(user?.email as);
               if (user != null) {
                 if (user.emailVerified) {
                   return LogoutView();
