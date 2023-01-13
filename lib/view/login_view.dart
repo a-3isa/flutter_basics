@@ -67,9 +67,13 @@ class _LoginViewState extends State<LoginView> {
                   if (emailVerified) {
                     log(user?.email as String);
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                        .pushNamedAndRemoveUntil(logoutRoute, (route) => false);
                   } else {
                     log(user?.email as String);
+                    // await showVerficationErrorDialog(
+                    //   context,
+                    //   'Verfication required!',
+                    // );
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         verficationRoute, (route) => false);
                   }

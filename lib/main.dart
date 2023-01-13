@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 if (user.emailVerified) {
                   return LogoutView();
                 } else {
-                  return VerficationView();
+                  return LoginView();
                 }
               } else {
                 return LoginView();

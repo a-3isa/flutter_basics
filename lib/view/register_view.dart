@@ -62,26 +62,55 @@ class _RegisterViewState extends State<RegisterView> {
                 try {
                   final userCredential = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
-                          email: email, password: password);
-                  log(userCredential as String);
+                    email: email,
+                    password: password,
+                  );
+                  // log(userCredential as String);
+                  final user = FirebaseAuth.instance.currentUser;
+                  await user?.sendEmailVerification();
+                  Navigator.of(context).pushNamed(
+                    verficationRoute,
+                  );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
-                    await showErrorDialog(context, 'Weak password');
+                    await showErrorDialog(
+                      context,
+                      'Weak password',
+                    );
                   } else if (e.code == 'email-is-already-in-use') {
-                    await showErrorDialog(context, 'Email is already in use');
+                    await showErrorDialog(
+                      context,
+                      'Email is already in use',
+                    );
                   } else if (e.code == 'invalid-email') {
-                    await showErrorDialog(context, 'Invalid email');
+                    await showErrorDialog(
+                      context,
+                      'Invalid email',
+                    );
+                  } else {
+                    await showErrorDialog(
+                      context,
+                      'Error ${e.code}',
+                    );
                   }
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: Text("Register"),
             ),
             TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginRoute, (route) => false);
-                },
-                child: Text("Already registerd? Login here!"))
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  loginRoute,
+                  (route) => false,
+                );
+              },
+              child: Text("Already registerd? Login here!"),
+            )
           ],
         ),
       ),
