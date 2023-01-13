@@ -1,10 +1,12 @@
 import 'package:new_basics/services/auth/auth_provider.dart';
 import 'package:new_basics/services/auth/auth_user.dart';
+import 'package:new_basics/services/auth/firebase_auth_provider.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;
 
   AuthService(this.provider);
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
   Future<AuthUser> createUser({
@@ -17,7 +19,6 @@ class AuthService implements AuthProvider {
       );
 
   @override
-  // TODO: implement currentUser
   AuthUser? get currentUser => provider.currentUser;
   @override
   Future<AuthUser> logIn({
@@ -33,5 +34,8 @@ class AuthService implements AuthProvider {
   Future<void> logOut() => provider.logOut();
 
   @override
-  Future<void> senEmailVerfication() => provider.senEmailVerfication();
+  Future<void> sendEmailVerfication() => provider.sendEmailVerfication();
+
+  @override
+  Future<void> initialize() => provider.initialize();
 }
