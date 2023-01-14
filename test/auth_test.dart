@@ -4,7 +4,14 @@ import 'package:new_basics/services/auth/auth_provider.dart';
 import 'package:new_basics/services/auth/auth_user.dart';
 import 'package:test/test.dart';
 
-void main() {}
+void main() {
+  group("Mock authentication", () {
+    final provider = MockAuthProvider();
+    test("should not be initialized", () {
+      expect(provider.isInitialized, false);
+    });
+  });
+}
 
 class NotInitializedException implements Exception {}
 
