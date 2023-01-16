@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_basics/constants/routes.dart';
-import 'package:new_basics/view/logout_view.dart';
+import 'package:new_basics/view/notes_view.dart';
 import 'view/login_view.dart';
 import 'view/register_view.dart';
 import 'view/verfication_view.dart';
@@ -18,7 +18,7 @@ void main() {
       loginRoute: (context) => LoginView(),
       registerRoute: (context) => RegisterView(),
       verficationRoute: (context) => VerficationView(),
-      logoutRoute: (context) => LogoutView(),
+      notesRoute: (context) => NotesView(),
     },
   ));
 }
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
               // log(user?.email as);
               if (user != null) {
                 if (user.isEmailVerified) {
-                  return LogoutView();
+                  return NotesView();
                 } else {
                   return LoginView();
                 }

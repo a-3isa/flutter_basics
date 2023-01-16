@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:new_basics/constants/routes.dart';
 import 'package:new_basics/services/auth/auth_exceptions.dart';
@@ -66,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                   final emailVerified = user?.isEmailVerified ?? false;
                   if (emailVerified) {
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil(logoutRoute, (route) => false);
+                        .pushNamedAndRemoveUntil(notesRoute, (route) => false);
                   } else {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         verficationRoute, (route) => false);
