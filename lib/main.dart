@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_basics/constants/routes.dart';
-import 'package:new_basics/view/notes_view.dart';
+import 'package:new_basics/view/notes/create_update_note_view.dart';
+import 'package:new_basics/view/notes/notes_view.dart';
 import 'view/login_view.dart';
 import 'view/register_view.dart';
 import 'view/verfication_view.dart';
@@ -19,6 +20,7 @@ void main() {
       registerRoute: (context) => RegisterView(),
       verficationRoute: (context) => VerficationView(),
       notesRoute: (context) => NotesView(),
+      newNoteRoute: (context) => NewNoteView()
     },
   ));
 }
