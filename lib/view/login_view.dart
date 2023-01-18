@@ -4,6 +4,8 @@ import 'package:new_basics/services/auth/auth_exceptions.dart';
 import 'package:new_basics/services/auth/auth_service.dart';
 import 'package:new_basics/utilities/show_error.dart';
 
+import '../utilities/dialogs/error_dialog.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
