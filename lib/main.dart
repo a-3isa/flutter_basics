@@ -20,7 +20,7 @@ void main() {
       registerRoute: (context) => RegisterView(),
       verficationRoute: (context) => VerficationView(),
       notesRoute: (context) => NotesView(),
-      newNoteRoute: (context) => NewNoteView()
+      createUpdateNoteView: (context) => CreateUpdateNoteView()
     },
   ));
 }
