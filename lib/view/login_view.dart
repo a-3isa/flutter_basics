@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_basics/constants/routes.dart';
 import 'package:new_basics/services/auth/auth_exceptions.dart';
-import 'package:new_basics/services/auth/auth_service.dart';
 import 'package:new_basics/services/auth/bloc/auth_bloc.dart';
 import 'package:new_basics/services/auth/bloc/auth_event.dart';
 import 'package:new_basics/services/auth/bloc/auth_state.dart';
-import 'package:new_basics/utilities/dialogs/loading_dialog.dart';
-import 'package:new_basics/utilities/show_error.dart';
 
 import '../utilities/dialogs/error_dialog.dart';
 
@@ -49,51 +45,61 @@ class _LoginViewState extends State<LoginView> {
             await showErrorDialog(context, "Authentication error");
           }
         }
-        ;
       },
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Login"),
+          title: const Text("Login"),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              TextField(
-                controller: _email,
-                decoration: InputDecoration(hintText: "Email"),
-                enableSuggestions: true,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextField(
-                controller: _password,
-                decoration: InputDecoration(hintText: "Password"),
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-              ),
-              TextButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-                  context.read<AuthBloc>().add(
-                        AuthEventLogIn(
-                          email,
-                          password,
-                        ),
-                      );
-                },
-                child: Text("Login"),
-              ),
-              TextButton(
-                  onPressed: () {
+        body: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Center(
+            child: Column(
+              children: [
+                TextField(
+                  controller: _email,
+                  decoration: const InputDecoration(hintText: "Email"),
+                  enableSuggestions: true,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextField(
+                  controller: _password,
+                  decoration: const InputDecoration(hintText: "Password"),
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                ),
+                TextButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
                     context.read<AuthBloc>().add(
-                          const AuthEventShouldRegister(),
+                          AuthEventLogIn(
+                            email,
+                            password,
+                          ),
                         );
                   },
-                  child: Text('Not register yet? Register here!'))
-            ],
+                  child: const Text("Login"),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    context.read<AuthBloc>().add(
+                          const AuthEventForgetPassword(),
+                        );
+                  },
+                  child: const Text("Forget password"),
+                ),
+                TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventShouldRegister(),
+                          );
+                    },
+                    child: const Text('Not register yet? Register here!'))
+              ],
+            ),
           ),
         ),
       ),

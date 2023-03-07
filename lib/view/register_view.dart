@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_basics/constants/routes.dart';
 import 'package:new_basics/services/auth/auth_exceptions.dart';
-import 'package:new_basics/services/auth/auth_service.dart';
 import 'package:new_basics/services/auth/bloc/auth_bloc.dart';
 import 'package:new_basics/services/auth/bloc/auth_event.dart';
 import 'package:new_basics/services/auth/bloc/auth_state.dart';
-import 'package:new_basics/utilities/show_error.dart';
 
 import '../utilities/dialogs/error_dialog.dart';
 
@@ -55,45 +50,49 @@ class _RegisterViewState extends State<RegisterView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Register"),
+          title: const Text("Register"),
           centerTitle: true,
         ),
-        body: Center(
-          child: Column(
-            children: [
-              TextField(
-                controller: _email,
-                decoration: InputDecoration(hintText: "Email"),
-                enableSuggestions: true,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextField(
-                controller: _password,
-                decoration: InputDecoration(hintText: "Password"),
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-              ),
-              TextButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-                  context.read<AuthBloc>().add(
-                        AuthEventRegister(email, password),
-                      );
-                },
-                child: const Text("Register"),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        AuthEventLogOut(),
-                      );
-                },
-                child: Text("Already registerd? Login here!"),
-              )
-            ],
+        body: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Center(
+            child: Column(
+              children: [
+                TextField(
+                  controller: _email,
+                  decoration: const InputDecoration(hintText: "Email"),
+                  enableSuggestions: true,
+                  autocorrect: false,
+                  autofocus: true,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextField(
+                  controller: _password,
+                  decoration: const InputDecoration(hintText: "Password"),
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                ),
+                TextButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    context.read<AuthBloc>().add(
+                          AuthEventRegister(email, password),
+                        );
+                  },
+                  child: const Text("Register"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventLogOut(),
+                        );
+                  },
+                  child: const Text("Already registerd? Login here!"),
+                )
+              ],
+            ),
           ),
         ),
       ),

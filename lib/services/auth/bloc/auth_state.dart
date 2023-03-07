@@ -9,14 +9,14 @@ abstract class AuthState {
 
   const AuthState({
     required this.isLoading,
-    this.loadingText = 'Please waite a moment',
+    this.loadingText = 'Please wait a moment',
   });
 }
 
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
 
-  AuthStateLoggedIn({required this.user, required bool isLoading})
+  const AuthStateLoggedIn({required this.user, required bool isLoading})
       : super(isLoading: isLoading);
 }
 
@@ -43,8 +43,19 @@ class AuthStateloggedOut extends AuthState with EquatableMixin {
 }
 
 class AuthStateRegistering extends AuthState {
-  final Exception exception;
+  final Exception? exception;
 
-  AuthStateRegistering({required this.exception, required bool isLoading})
+  const AuthStateRegistering({required this.exception, required bool isLoading})
       : super(isLoading: isLoading);
+}
+
+class AuthStateForgetPassword extends AuthState {
+  final Exception? exception;
+  final bool hasSentEmail;
+
+  const AuthStateForgetPassword({
+    required this.exception,
+    required this.hasSentEmail,
+    required bool isLoading,
+  }) : super(isLoading: isLoading);
 }

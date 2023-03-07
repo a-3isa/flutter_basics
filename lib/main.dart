@@ -6,6 +6,7 @@ import 'package:new_basics/services/auth/bloc/auth_bloc.dart';
 import 'package:new_basics/services/auth/bloc/auth_event.dart';
 import 'package:new_basics/services/auth/bloc/auth_state.dart';
 import 'package:new_basics/services/auth/firebase_auth_provider.dart';
+import 'package:new_basics/view/forget_password_view.dart';
 import 'package:new_basics/view/notes/create_update_note_view.dart';
 import 'package:new_basics/view/notes/notes_view.dart';
 import 'view/login_view.dart';
@@ -37,8 +38,10 @@ class HomePage extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading) {
-          LoadinScreen()
-              .show(context: context, text: state.loadingText ?? 'Please wait');
+          LoadinScreen().show(
+            context: context,
+            text: state.loadingText ?? 'Please wait A momensssto',
+          );
         } else {
           LoadinScreen().hide();
         }
@@ -52,6 +55,8 @@ class HomePage extends StatelessWidget {
           return const LoginView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
+        } else if (state is AuthStateForgetPassword) {
+          return const ForgetPasswordView();
         } else {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),

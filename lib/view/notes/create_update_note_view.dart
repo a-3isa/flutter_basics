@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_basics/services/auth/auth_service.dart';
-import 'package:new_basics/services/cloud/cloud_storage_constants.dart';
-import 'package:new_basics/services/crud/notes_services.dart';
 import 'package:new_basics/utilities/generics/get_arguments.dart';
 import 'package:new_basics/services/cloud/cloud_note.dart';
 import 'package:new_basics/services/cloud/firebase_cloud_storage.dart';
-import 'package:new_basics/services/cloud/cloud_storage_exceptions.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';
@@ -58,7 +55,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       return existingNote;
     }
     final currentUser = AuthService.firebase().currentUser!;
-    final email = currentUser.email;
     // final owner = await _notesService.getUser(email: email);
     final userId = currentUser.id;
     final newNote = await _notesService.createNewNotes(ownerUserId: userId);
@@ -96,7 +92,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New Note"),
+        title: const Text("New Note"),
         actions: [
           IconButton(
               onPressed: () async {
@@ -107,7 +103,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                   Share.share(text);
                 }
               },
-              icon: Icon(Icons.share))
+              icon: const Icon(Icons.share))
         ],
       ),
       body: FutureBuilder(
@@ -120,10 +116,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 controller: _textController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: InputDecoration(hintText: "Start typing ....."),
+                decoration:
+                    const InputDecoration(hintText: "Start typing ....."),
               );
             default:
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
           }
         },
       ),
