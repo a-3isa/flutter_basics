@@ -7,7 +7,7 @@ class AuthUser {
   final bool isEmailVerified;
   final String email;
 
-  AuthUser({
+  const AuthUser({
     required this.id,
     required this.email,
     required this.isEmailVerified,

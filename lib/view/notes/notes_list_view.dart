@@ -39,7 +39,7 @@ class NotesListView extends StatelessWidget {
                 onDeleteNote(note);
               }
             },
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
           ),
           onTap: () {
             onTap(note);

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:new_basics/services/auth/auth_exceptions.dart';
 import 'package:new_basics/services/auth/auth_provider.dart';
 import 'package:new_basics/services/auth/auth_user.dart';
@@ -25,7 +24,7 @@ class MockAuthProvider implements AuthProvider {
     required String password,
   }) async {
     if (!isInitialized) throw NotInitializedException();
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     return logIn(
       email: email,
       password: password,
@@ -37,7 +36,7 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<void> initialize() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _isInialized = true;
   }
 
@@ -49,7 +48,7 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     if (email == "foo@bar.com") throw UserNotFoundException();
     if (password == 'foobar') throw WrongPasswordException();
-    final user = AuthUser(isEmailVerified: false, email: '', id: 'my_id');
+    final user = const AuthUser(isEmailVerified: false, email: '', id: 'my_id');
     _user = user;
     return Future.value(user);
   }
@@ -58,7 +57,7 @@ class MockAuthProvider implements AuthProvider {
   Future<void> logOut() async {
     if (!isInitialized) throw NotInitializedException();
     if (_user == null) throw UseerNotLoggedInAuthException();
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _user = null;
   }
 
@@ -67,7 +66,8 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     final user = _user;
     if (user == null) throw UserNotFoundException();
-    final newUser = AuthUser(isEmailVerified: true, email: '', id: 'my_id');
+    final newUser =
+        const AuthUser(isEmailVerified: true, email: '', id: 'my_id');
     _user = newUser;
   }
 

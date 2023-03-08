@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:new_basics/services/auth/auth_exceptions.dart';
 import 'package:new_basics/services/auth/auth_provider.dart';
 import 'package:new_basics/services/auth/bloc/auth_event.dart';
 import 'package:new_basics/services/auth/bloc/auth_state.dart';
@@ -115,7 +114,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await provider.logOut();
         emit(
-          AuthStateloggedOut(
+          const AuthStateloggedOut(
             exception: null,
             isLoading: false,
           ),

@@ -22,7 +22,7 @@ void main() {
     ),
     home: BlocProvider<AuthBloc>(
       create: (context) => AuthBloc(FirebaseAuthProvider()),
-      child: HomePage(),
+      child: const HomePage(),
     ),
     routes: {createUpdateNoteView: (context) => const CreateUpdateNoteView()},
   ));

@@ -14,7 +14,7 @@ class _VerficationViewState extends State<VerficationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Verfication"), centerTitle: true),
+      appBar: AppBar(title: const Text("Verfication"), centerTitle: true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
